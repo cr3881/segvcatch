@@ -27,6 +27,10 @@ segvcatch::handler handler_fpe = 0;
 #include "x86_64-signal.h"
 #endif /*__x86_64__*/
 
+#ifdef __aarch64__
+#include "aarch64-signal.h"
+#endif /*__aarch64__*/
+
 #endif /*defined __GNUC__ && __linux*/
 
 void default_segv()
