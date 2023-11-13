@@ -27,32 +27,6 @@ details.  */
 static void _Jv_##_name (int, siginfo_t *,			\
 			 void *_p __attribute__ ((__unused__)))
 
-#define HANDLE_DIVIDE_OVERFLOW \
-do { \
-  ucontext_t *_uc = (ucontext_t *)_p; \
-  gregset_t &_gregs = _uc->uc_mcontext.regs; \
-  unsigned char *_rip = (unsigned char *)_gregs[REG_PC]; \
-  bool _is_64_bit = true; \
-  if ((_rip[0] & 0x1f) == 0x1d) { /* Check for 4-byte instruction */ \
-    _is_64_bit = false; \
-  } \
-  if (_rip[0] == 0x9b) { /* Check for SDIV or UDIV instruction */ \
-    bool _min_value_dividend = false; \
-    unsigned char _op = _rip[3]; \
-    if (_op == 0x7c) { /* Check for signed division */ \
-      if (_is_64_bit) { \
-        _min_value_dividend = _gregs[REG_X0] == (greg_t)0x8000000000000000UL; \
-      } else { \
-        _min_value_dividend = (_gregs[REG_X0] & 0xffffffff) == (greg_t)0x80000000UL; \
-      } \
-    } \
-    if (_min_value_dividend) { \
-      _gregs[REG_X1] = 0; /* Set the remainder to zero */ \
-      _gregs[REG_PC] += 4; /* Advance the instruction pointer to point to the following instruction */ \
-      return; \
-    } \
-  } \
-} while (0)
 
 
 

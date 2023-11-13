@@ -30,15 +30,15 @@ int main(int argc, char *argv[])
         std::cerr << "Exception catched : " << e.what() << std::endl;
     }
 
-    try
-    {
-        int v = 0;
-        std::cout << 10 / v << std::endl;
-    }
-    catch (std::exception& e)
-    {
-        std::cerr << "Exception catched : " << e.what() << std::endl;
-    }
+    // try
+    // {
+    //     int v = 0;
+    //     std::cout << 10 / v << std::endl;
+    // }
+    // catch (std::exception& e)
+    // {
+    //     std::cerr << "Exception catched : " << e.what() << std::endl;
+    // }
 
     std::cout << "We are living yet!" << std::endl;
 
